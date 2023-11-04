@@ -17,7 +17,7 @@ folder_btn = QPushButton("Папка")
 horizontal1.addWidget(folder_btn, alignment=Qt.AlignLeft)
 
 img_list = QListWidget()
-img_holder = QWidget()
+img_holder = QLabel("PHOTO")
 
 rotate_left_btn = QPushButton("Вліво")
 rotate_right_btn = QPushButton("Вправо")
