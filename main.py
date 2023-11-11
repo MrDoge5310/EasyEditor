@@ -34,11 +34,21 @@ class ImageEditor:
 workdir = ''
 
 
+def filter_files(name):
+    exceptions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
+    for exc in exceptions:
+        if exc in name:
+            return True
+        else:
+            return False
+
+
 def FillPhotoList():
-    files = os.listdir(workdir)
+
+    files = filter(filter_files, os.listdir(workdir))
+    img_list.clear()
     for file in files:
-        if ".png" in file or ".jpg" in file:
-            img_list.addItem(file)
+        img_list.addItem(file)
 
 
 def choseDirectory():
