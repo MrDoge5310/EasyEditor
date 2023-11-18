@@ -20,6 +20,7 @@ class ImageEditor:
 
         try:
             self.original = Image.open(self.path)
+            self.edited.append(self.original)
         except:
             QMessageBox.warning(window, "Помилка", "Файл не знайдено!")
 
@@ -29,6 +30,9 @@ class ImageEditor:
         width, height = img_holder.width(), img_holder.height()
         pixmapimg = pixmapimg.scaled(width, height, Qt.KeepAspectRatio)
         img_holder.setPixmap(pixmapimg)
+
+    def rotateLeft(self):
+
 
 
 workdir = ''
