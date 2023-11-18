@@ -11,7 +11,7 @@ class ImageEditor:
         self.filename = None
         self.original = None
         self.path = None
-        self.edited = []
+        self.edited_dir = "Modified"
 
     def open(self, directory, filename):
         self.filename = filename
@@ -20,19 +20,31 @@ class ImageEditor:
 
         try:
             self.original = Image.open(self.path)
-            self.edited.append(self.original)
         except:
             QMessageBox.warning(window, "Помилка", "Файл не знайдено!")
 
 
     def ShowImg(self):
+        print('3', self.path)
         pixmapimg = QPixmap(self.path)
         width, height = img_holder.width(), img_holder.height()
         pixmapimg = pixmapimg.scaled(width, height, Qt.KeepAspectRatio)
         img_holder.setPixmap(pixmapimg)
 
-    def rotateLeft(self):
+    def SaveImage(self):
+        path = os.path.join(workdir, self.edited_dir)
+        if not os.path.exists(path) or os.path.isdir(path):
+            os.makedirs(path, exist_ok=True)
+        fullname = os.path.join(path, self.filename)
 
+        self.path = fullname
+        self.original.save(fullname)
+
+    def rotateLeft(self):
+        self.original = self.original.transpose(Image.ROTATE_90)
+        self.SaveImage()
+        image_path = os.path.join(workdir, self.edited_dir, self.filename)
+        self.ShowImg()
 
 
 workdir = ''
@@ -72,6 +84,7 @@ image = ImageEditor()
 
 folder_btn.clicked.connect(choseDirectory)
 img_list.itemClicked.connect(show_chosen_picture)
+rotate_left_btn.clicked.connect(image.rotateLeft)
 
 window.show()
 app.exec_()
